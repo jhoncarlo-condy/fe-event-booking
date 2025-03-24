@@ -1,9 +1,9 @@
 import React from 'react'
-import Login from './login'
+import About from './About'
 
 const page = () => {
   return (
-    <Login />
+    <About/>
   )
 }
 

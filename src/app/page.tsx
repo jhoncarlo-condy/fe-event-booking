@@ -1,11 +1,5 @@
 'use client';
-import React, { useState } from 'react';
-import {
-	NavigationMenu,
-	NavigationMenuItem,
-	NavigationMenuLink,
-	NavigationMenuList,
-} from '@/components/ui/navigation-menu';
+
 import {
 	Carousel,
 	CarouselContent,
@@ -15,72 +9,51 @@ import {
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Footer from '@/components/footer/footer';
+import Header from '@/components/header/header';
+
 
 const LandingPage = () => {
-	const plugin = React.useRef(
-		Autoplay({ delay: 3000, stopOnInteraction: true })
-	);
-
 	return (
 		<div className='min-h-screen flex flex-col bg-gray-100'>
-			{/* Navbar */}
-			<header className='bg-blue-600 p-4'>
-				<div className='max-w-7xl mx-auto flex justify-between items-center'>
-					<h1 className='text-white text-xl font-bold'>ABC Event Bookings</h1>
-					<NavigationMenu>
-						<NavigationMenuList className='flex space-x-6'>
-							<NavigationMenuItem>
-								<NavigationMenuLink
-									href='#home'
-									className='text-white hover:text-black'
-								>
-									Home
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-							<NavigationMenuItem>
-								<NavigationMenuLink
-									href='#about'
-									className='text-white hover:text-black'
-								>
-									About
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-							<NavigationMenuItem>
-								<NavigationMenuLink
-									href='#login'
-									className='text-white hover:text-black'
-								>
-									Login
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-						</NavigationMenuList>
-					</NavigationMenu>
-				</div>
-			</header>
-
+			<Header />
 			{/* Main Content */}
 			<main className='flex-grow flex justify-center items-center text-center bg-gray-100 py-12'>
-				<div className='max-w-3xl px-6'>
+				<div className='max-w-6xl px-6 w-full'>
 					<h2 className='text-4xl font-bold text-gray-800'>Upcoming Events</h2>
 
 					{/* Shadcn Carousel */}
-					<div className='mt-8 relative'>
+					<div className='mt-8 relative w-full'>
 						<Carousel
-							plugins={[plugin.current]}
-							className='w-max'
-							onMouseEnter={plugin.current.stop}
-							onMouseLeave={plugin.current.reset}
+							plugins={[
+								Autoplay({
+									delay: 3000,
+								}),
+							]}
+							className='w-full max-w-full'
 						>
-							<CarouselContent >
+							<CarouselContent className='flex'>
 								{Array.from({ length: 5 }).map((_, index) => (
-									<CarouselItem key={index} className="basis-1/3">
-										<div className='p-1'>
-											<Card>
-												<CardContent className='flex aspect-square items-center justify-center p-6'>
+									<CarouselItem
+										key={index}
+										className='min-w-[33.33%] md:min-w-[33.33%] lg:min-w-[33.33%] h-full basis-1/3'
+									>
+										<div className='p-2 h-full'>
+											<Card className='h-[500px] flex flex-col justify-between'>
+												<CardContent className='flex flex-col items-center justify-center p-6 flex-grow'>
 													<span className='text-4xl font-semibold'>
 														{index + 1}
 													</span>
 												</CardContent>
+												<div className='p-4 flex justify-center'>
+													<Button
+														className='w-2/5 bg-[#578FCA] text-white hover:bg-blue-400 hover:text-white border-2 hover:cursor-pointer'
+														variant='outline'
+													>
+														Book Now
+													</Button>
+												</div>
 											</Card>
 										</div>
 									</CarouselItem>
@@ -94,9 +67,7 @@ const LandingPage = () => {
 			</main>
 
 			{/* Footer */}
-			<footer className='bg-gray-800 text-white text-center py-4'>
-				<p>&copy; 2025 My Landing Page. All rights reserved.</p>
-			</footer>
+			<Footer />
 		</div>
 	);
 };
