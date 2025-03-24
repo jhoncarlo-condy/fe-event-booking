@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import {
 	NavigationMenu,
 	NavigationMenuItem,
@@ -13,8 +14,24 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 import SignIn from '../signin/SignIn';
+import Cookies from 'js-cookie';
+import UserMenu from '../menu/user/user-menu';
+import AdminMenu from '../menu/admin/admin-menu';
 
-const header = () => {
+const Header = () => {
+	const [hasToken, setHasToken] = useState(false);
+	const [role, setRole] = useState<string | null>('');
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		setIsMounted(true);
+		setHasToken(!!Cookies.get('token'));
+		const userRole = Cookies.get('role');
+		setRole(userRole || null);
+	}, []);
+
+	if (!isMounted) return null; // Prevents hydration mismatch
+
 	return (
 		<>
 			<header className='bg-[#3674B5] p-4'>
@@ -30,6 +47,16 @@ const header = () => {
 									Home
 								</NavigationMenuLink>
 							</NavigationMenuItem>
+							{hasToken && (
+								<NavigationMenuItem>
+									<NavigationMenuLink
+										href='/events'
+										className='text-white hover:text-black'
+									>
+										Events
+									</NavigationMenuLink>
+								</NavigationMenuItem>
+							)}
 							<NavigationMenuItem>
 								<NavigationMenuLink
 									href='/about'
@@ -39,17 +66,21 @@ const header = () => {
 								</NavigationMenuLink>
 							</NavigationMenuItem>
 							<NavigationMenuItem>
-								<Dialog>
-									<DialogTrigger className='bg-gray-100 text-black hover:bg-gray-300 px-4 py-2 rounded'>
-										Book Now
-									</DialogTrigger>
-									<DialogContent>
-										<DialogHeader>
-											<DialogTitle></DialogTitle>
-										</DialogHeader>
-										<SignIn />
-									</DialogContent>
-								</Dialog>
+								{hasToken && role && role === 'admin' && <AdminMenu />}
+								{hasToken && role && role === 'user' && <UserMenu />}
+								{!hasToken && (
+									<Dialog>
+										<DialogTrigger className='bg-gray-100 text-black hover:bg-gray-300 px-4 py-2 rounded'>
+											Book Now
+										</DialogTrigger>
+										<DialogContent>
+											<DialogHeader>
+												<DialogTitle></DialogTitle>
+											</DialogHeader>
+											<SignIn />
+										</DialogContent>
+									</Dialog>
+								)}
 							</NavigationMenuItem>
 						</NavigationMenuList>
 					</NavigationMenu>
@@ -59,4 +90,4 @@ const header = () => {
 	);
 };
 
-export default header;
+export default Header;

@@ -16,7 +16,6 @@ import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
 const SignIn = () => {
-	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const loginMutation = useMutation({
@@ -26,9 +25,9 @@ const SignIn = () => {
 				Cookies.set("token", data.access_token, { secure: true, sameSite: "Strict" });
 				Cookies.set("role", data.role, { secure: true, sameSite: "Strict" });
 				if(data.role == 'admin') {
-					router.push('/admin/dashboard');
+					window.location.replace('/admin/dashboard');
 				} else {
-					router.push('/user/dashboard');
+					window.location.replace('/');
 				}
 			}
 		},

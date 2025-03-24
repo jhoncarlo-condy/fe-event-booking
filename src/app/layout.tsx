@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { TanstackProvider } from '@/components/providers/tanstack-provider';
+import { Toaster } from 'react-hot-toast';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -29,6 +30,24 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
 				<TanstackProvider>{children}</TanstackProvider>
+				<Toaster
+				
+					toastOptions={{
+						style: {
+							color: '#ffffff',
+						  },
+						success: {
+							style: {
+								background: 'green',
+							},
+						},
+						error: {
+							style: {
+								background: 'red',
+							},
+						},
+					}}
+				/>
 			</body>
 		</html>
 	);

@@ -1,4 +1,4 @@
-import { AxiosInstance } from "@/utils/axios";
+import { AxiosInstance } from '@/utils/axios';
 
 export const loginUser = async ({
 	email,
@@ -11,6 +11,16 @@ export const loginUser = async ({
 		email: email,
 		password: password,
 	})
+		.then((response) => {
+			return response.data;
+		})
+		.catch((error) => {
+			return error;
+		});
+};
+
+export const logoutUser = async () => {
+	return await AxiosInstance.post('/logout')
 		.then((response) => {
 			return response.data;
 		})
