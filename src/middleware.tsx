@@ -9,11 +9,12 @@ export function middleware(req: NextRequest) {
     const url = req.nextUrl.clone();
 
     if (token) {
-        if (role === "admin" && pathname !== "/admin/dashboard") {
-            url.pathname = "/admin/dashboard";
+        if (role === "admin" && pathname.startsWith("/user")) {
+            url.pathname = "/user/dashboard";
             return NextResponse.redirect(url);
         }
-        if (role === "user" && pathname !== "/user/dashboard") {
+
+        if (role === "user" && pathname.startsWith("/admin")) {
             url.pathname = "/user/dashboard";
             return NextResponse.redirect(url);
         }
