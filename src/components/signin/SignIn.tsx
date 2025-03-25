@@ -45,9 +45,13 @@ const SignIn = () => {
 				});
 				Cookies.set('role', data.role, { secure: true, sameSite: 'Strict' });
 				if (data.role == 'admin') {
-					window.location.replace('/admin/dashboard');
+					setTimeout(() => {
+						window.location.replace('/admin/dashboard');
+					}, 1000);
 				} else {
-					window.location.replace('/');
+					setTimeout(() => {
+						window.location.replace('/admin/dashboard');
+					}, 1000);
 				}
 			}
 		},

@@ -1,7 +1,7 @@
 import React from 'react';
-import Dashboard from './dashboard';
 import Header from '@/components/header/Header';
 import Footer from '@/components/footer/Footer';
+import Dashboard from './dashboard';
 
 const page = () => {
 	return (
