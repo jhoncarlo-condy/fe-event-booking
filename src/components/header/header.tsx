@@ -70,10 +70,13 @@ const Header = () => {
 								{hasToken && role && role === 'user' && <UserMenu />}
 								{!hasToken && (
 									<Dialog>
-										<DialogTrigger className='bg-gray-100 text-black hover:bg-gray-300 px-4 py-2 rounded'>
+										<DialogTrigger asChild className='bg-gray-100 text-black hover:bg-gray-300 px-4 py-2 rounded'>
 											Book Now
 										</DialogTrigger>
-										<DialogContent>
+										<DialogContent
+											onPointerDownOutside={(e) => e.preventDefault()}
+											onEscapeKeyDown={(e) => e.preventDefault()}
+										>
 											<DialogHeader>
 												<DialogTitle></DialogTitle>
 											</DialogHeader>

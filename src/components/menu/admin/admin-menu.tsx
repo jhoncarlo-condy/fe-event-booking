@@ -1,8 +1,6 @@
 import {
 	CalendarDays,
-	ChartBar,
 	ChartBarStacked,
-	FileClock,
 	LayoutDashboard,
 	LogOut,
 	Scroll,

@@ -8,7 +8,6 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 import SignUp from '@/components/signup/SignUp';
-import { Input } from '../ui/input';
 import { ChangeEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '@/server/User/User';
@@ -16,8 +15,10 @@ import Cookies from 'js-cookie';
 import { Button } from '../ui/button';
 import Spinner from '../ui/spinner';
 import toast from 'react-hot-toast';
+import { FloatingLabelInput } from '../ui/floating-label-input';
 
 const SignIn = () => {
+	const [signUpOpen, setSignUpOpen] = useState(false);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -31,13 +32,13 @@ const SignIn = () => {
 		mutationFn: loginUser,
 		onSuccess: (data) => {
 			setLoading(false);
-
-			console.log(data);
 			if (!data.success) {
 				toast.error(data.message);
+				return;
 			}
 
 			if (data?.role) {
+				toast.success('Login Successful');
 				Cookies.set('token', data.access_token, {
 					secure: true,
 					sameSite: 'Strict',
@@ -58,6 +59,7 @@ const SignIn = () => {
 		const hasError = validate();
 		if (!hasError) {
 			loginMutation.mutate({ email, password });
+			return;
 		}
 		setLoading(false);
 	};
@@ -85,15 +87,15 @@ const SignIn = () => {
 
 	const handleEmailOnChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setEmail(event.target.value);
-		setErrorEmail("");
-		setMessageEmail("");
-	}
+		setErrorEmail('');
+		setMessageEmail('');
+	};
 
 	const handlePasswordOnChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setPassword(event.target.value);
-		setErrorPassword("");
-		setMessagePassword("");
-	}
+		setErrorPassword('');
+		setMessagePassword('');
+	};
 
 	return (
 		<>
@@ -105,10 +107,11 @@ const SignIn = () => {
 					<div className='space-y-4'>
 						{' '}
 						{/* Changed space-y-2 to space-y-4 here */}
-						<Input
+						<FloatingLabelInput
+							id='email'
+							label='Email'
 							type='email'
 							name='email'
-							placeholder='Email'
 							value={email}
 							onChange={handleEmailOnChange}
 							className={`${
@@ -124,10 +127,11 @@ const SignIn = () => {
 					<div className='mt-4'>
 						{' '}
 						{/* space-y-4 ensures there's space between the inputs */}
-						<Input
+						<FloatingLabelInput
+							id='password'
 							type='password'
 							name='password'
-							placeholder='Password'
+							label='Password'
 							value={password}
 							min='8'
 							onChange={handlePasswordOnChange}
@@ -154,17 +158,20 @@ const SignIn = () => {
 
 			<div className='flex flex-row mt-2'>
 				<Label className='text-center'>Don&apos;t have an account?&nbsp;</Label>
-				<Dialog>
-					<DialogTrigger>
+				<Dialog open={signUpOpen} onOpenChange={setSignUpOpen}>
+					<DialogTrigger asChild>
 						<Label className='text-blue-600 hover:cursor-pointer hover:underline'>
 							Sign Up
 						</Label>
 					</DialogTrigger>
-					<DialogContent>
+					<DialogContent
+						onPointerDownOutside={(e) => e.preventDefault()}
+						onEscapeKeyDown={(e) => e.preventDefault()}
+					>
 						<DialogHeader>
 							<DialogTitle></DialogTitle>
 						</DialogHeader>
-						<SignUp />
+						<SignUp setSignUpOpen={setSignUpOpen} />
 					</DialogContent>
 				</Dialog>
 			</div>
