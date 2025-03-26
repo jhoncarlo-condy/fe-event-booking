@@ -16,7 +16,7 @@ import {
 	TableBody,
 	TableCell,
 } from '@/components/ui/table';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, Filter } from 'lucide-react';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -34,16 +34,16 @@ import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from '@/components/ui/dialog';
 import CreateUser from './create-user';
 import EditUser from './edit-user';
 
 const Users = () => {
-	const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState<User[]>([]);
 	const [createOpen, setCreateOpen] = useState(false);
 	const [updateOpen, setUpdateOpen] = useState(false);
 	const [selectedUser, setSelectedUser] = useState('');
+	const [roleFilter, setRoleFilter] = useState<string | null>(null);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 10;
@@ -56,12 +56,18 @@ const Users = () => {
 		}
 	}, [result]);
 
+	// Filter users based on role before paginating
+	const filteredUsers = useMemo(() => {
+		if (!roleFilter) return users;
+		return users.filter((user) => user.role === roleFilter);
+	}, [users, roleFilter]);
+
 	const paginatedUsers = useMemo(() => {
 		const start = (currentPage - 1) * itemsPerPage;
-		return users.slice(start, start + itemsPerPage);
-	}, [users, currentPage]);
+		return filteredUsers.slice(start, start + itemsPerPage);
+	}, [filteredUsers, currentPage]);
 
-	const totalPages = Math.ceil(users.length / itemsPerPage);
+	const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
 	const handleCreateModal = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -79,13 +85,35 @@ const Users = () => {
 			<Label className='m-10 text-3xl'>Manage Users</Label>
 			<Card className='m-10'>
 				<CardHeader className='flex justify-between items-center'>
-					<CardTitle></CardTitle>
-					<Button
-						className='bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white px-4 py-2 rounded'
-						onClick={handleCreateModal}
-					>
-						Create
-					</Button>
+					<CardTitle>Users</CardTitle>
+					<div className='flex gap-4'>
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button variant='outline'>
+									<Filter className='mr-2 h-4 w-4' />
+									{roleFilter ? capitalize(roleFilter) : 'Filter by Role'}
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align='end'>
+								<DropdownMenuLabel>Filter by Role</DropdownMenuLabel>
+								<DropdownMenuItem onClick={() => setRoleFilter(null)}>
+									All
+								</DropdownMenuItem>
+								<DropdownMenuItem onClick={() => setRoleFilter('admin')}>
+									Admin
+								</DropdownMenuItem>
+								<DropdownMenuItem onClick={() => setRoleFilter('user')}>
+									User
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
+						<Button
+							className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded'
+							onClick={handleCreateModal}
+						>
+							Create
+						</Button>
+					</div>
 				</CardHeader>
 				<CardContent>
 					<Table>
@@ -144,7 +172,6 @@ const Users = () => {
 													>
 														Edit
 													</DropdownMenuItem>
-													{/* <DropdownMenuItem>Delete</DropdownMenuItem> */}
 												</DropdownMenuContent>
 											</DropdownMenu>
 										</TableCell>
@@ -157,8 +184,8 @@ const Users = () => {
 				<CardFooter className='flex justify-between items-center p-4'>
 					<span className='text-sm'>
 						Showing {itemsPerPage * (currentPage - 1) + 1} -{' '}
-						{Math.min(itemsPerPage * currentPage, users.length)} of{' '}
-						{users.length}
+						{Math.min(itemsPerPage * currentPage, filteredUsers.length)} of{' '}
+						{filteredUsers.length}
 					</span>
 					<div className='flex gap-2'>
 						<Button
@@ -180,11 +207,7 @@ const Users = () => {
 			</Card>
 			{/* Create User */}
 			<Dialog open={createOpen} onOpenChange={setCreateOpen}>
-				<DialogTrigger asChild></DialogTrigger>
-				<DialogContent
-					onPointerDownOutside={(e) => e.preventDefault()}
-					onEscapeKeyDown={(e) => e.preventDefault()}
-				>
+				<DialogContent>
 					<DialogHeader>
 						<DialogTitle></DialogTitle>
 					</DialogHeader>
@@ -193,11 +216,7 @@ const Users = () => {
 			</Dialog>
 			{/* Edit User */}
 			<Dialog open={updateOpen} onOpenChange={setUpdateOpen}>
-				<DialogTrigger asChild></DialogTrigger>
-				<DialogContent
-					onPointerDownOutside={(e) => e.preventDefault()}
-					onEscapeKeyDown={(e) => e.preventDefault()}
-				>
+				<DialogContent>
 					<DialogHeader>
 						<DialogTitle></DialogTitle>
 					</DialogHeader>

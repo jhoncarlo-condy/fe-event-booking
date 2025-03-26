@@ -4,5 +4,19 @@ export interface User {
 	last_name: string;
 	email: string;
 	role: string;
-    created_at: Date;
+	created_at: Date;
+}
+
+export interface Event {
+	id: number;
+	title: string;
+	description: string;
+	event_date: Date;
+	start_time: string;
+	end_time: string;
+	capacity: number;
+	price: number;
+	location: string;
+	image: string | null;
+	status: string;
 }

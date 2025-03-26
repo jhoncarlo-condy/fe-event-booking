@@ -1,5 +1,5 @@
 import { AxiosInstance } from '@/utils/axios';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export const loginUser = async ({
 	email,
