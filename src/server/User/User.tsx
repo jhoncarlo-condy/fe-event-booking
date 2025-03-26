@@ -1,4 +1,5 @@
 import { AxiosInstance } from '@/utils/axios';
+import { useQuery } from '@tanstack/react-query';
 
 export const loginUser = async ({
 	email,
@@ -34,7 +35,7 @@ export const registerUser = async ({
 	lastName,
 	email,
 	password,
-	passwordConfirmation
+	passwordConfirmation,
 }: {
 	firstName: string;
 	lastName: string;
@@ -47,7 +48,7 @@ export const registerUser = async ({
 		last_name: lastName,
 		email: email,
 		password: password,
-		password_confirmation: passwordConfirmation
+		password_confirmation: passwordConfirmation,
 	})
 		.then((response) => {
 			return response.data;
@@ -55,4 +56,87 @@ export const registerUser = async ({
 		.catch((error) => {
 			return error.response?.data;
 		});
+};
+
+export const updateUser = async ({
+	firstName,
+	lastName,
+	email,
+}: {
+	firstName: string;
+	lastName: string;
+	email: string;
+}) => {
+	return await AxiosInstance.put(`/update/${email}`, {
+		first_name: firstName,
+		last_name: lastName,
+	})
+		.then((response) => {
+			return response.data;
+		})
+		.catch((error) => {
+			return error.response?.data;
+		});
+};
+
+export const changePassword = async ({
+	oldPassword,
+	password,
+	passwordConfirmation,
+}: {
+	oldPassword: string;
+	password: string;
+	passwordConfirmation: string;
+}) => {
+	return await AxiosInstance.post('/change-password', {
+		old_password: oldPassword,
+		password: password,
+		password_confirmation: passwordConfirmation,
+	})
+		.then((response) => {
+			return response.data;
+		})
+		.catch((error) => {
+			return error.response?.data;
+		});
+};
+
+export const getUser = async () => {
+	return await AxiosInstance.get('/profile')
+		.then((response) => {
+			return response.data;
+		})
+		.catch((error) => {
+			return error.response?.data;
+		});
+};
+
+export const useGetUser = () => {
+	const {data, error, isLoading} = useQuery({
+		queryKey: ["getUser"],
+		queryFn: getUser,
+		staleTime: Infinity
+	});
+
+	return { data: data , error, isLoading };
+}
+
+export const getUsers = async () => {
+	return await AxiosInstance.get('/users')
+		.then((response) => {
+			return response.data;
+		})
+		.catch((error) => {
+			return error.response?.data;
+		});
+}
+
+export const useGetUsers = () => {
+	const {data, error, isLoading} = useQuery({
+		queryKey: ["getUsers"],
+		queryFn: getUsers,
+		staleTime: Infinity
+	});
+
+	return { data: data , error, isLoading };
 }

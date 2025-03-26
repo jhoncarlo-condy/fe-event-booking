@@ -85,8 +85,6 @@ const SignUp = ({ setSignUpOpen }: { setSignUpOpen: (open: boolean) => void }) =
 			),
 		};
 
-		console.log(errors);
-
 		if (
 			password.length >= 8 &&
 			passwordConfirmation.length >= 8 &&
@@ -150,9 +148,8 @@ const SignUp = ({ setSignUpOpen }: { setSignUpOpen: (open: boolean) => void }) =
 			</h1>
 			<div className='flex flex-col space-y-4'>
 				<form onSubmit={handleSubmit}>
-					<div className='space-y-4'>
+					<div>
 						{' '}
-						{/* Changed space-y-2 to space-y-4 here */}
 						<FloatingLabelInput
 							id='firstName'
 							label='First Name'
@@ -170,9 +167,8 @@ const SignUp = ({ setSignUpOpen }: { setSignUpOpen: (open: boolean) => void }) =
 							</span>
 						)}
 					</div>
-					<div className='space-y-4 mt-4'>
+					<div className='mt-4'>
 						{' '}
-						{/* Changed space-y-2 to space-y-4 here */}
 						<FloatingLabelInput
 							id='lastName'
 							label='Last Name'
@@ -190,9 +186,8 @@ const SignUp = ({ setSignUpOpen }: { setSignUpOpen: (open: boolean) => void }) =
 							</span>
 						)}
 					</div>
-					<div className='space-y-4 mt-4'>
+					<div className='mt-4'>
 						{' '}
-						{/* Changed space-y-2 to space-y-4 here */}
 						<FloatingLabelInput
 							id='email'
 							label='Email'
@@ -212,7 +207,6 @@ const SignUp = ({ setSignUpOpen }: { setSignUpOpen: (open: boolean) => void }) =
 					</div>
 					<div className='mt-4'>
 						{' '}
-						{/* space-y-4 ensures there's space between the inputs */}
 						<FloatingLabelInput
 							id='password'
 							label='Password'
@@ -233,7 +227,6 @@ const SignUp = ({ setSignUpOpen }: { setSignUpOpen: (open: boolean) => void }) =
 					</div>
 					<div className='mt-4'>
 						{' '}
-						{/* space-y-4 ensures there's space between the inputs */}
 						<FloatingLabelInput
 							id='passwordConfirmation'
 							type='password'

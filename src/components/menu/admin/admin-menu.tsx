@@ -72,25 +72,37 @@ const AdminMenu = () => {
 								<UserPen />
 							</DropdownMenuShortcut>
 						</DropdownMenuItem>
-						<DropdownMenuItem className='hover:cursor-pointer'>
+						<DropdownMenuItem
+							className='hover:cursor-pointer'
+							onClick={() => router.push('/admin/users')}
+						>
 							Manage Users
 							<DropdownMenuShortcut>
 								<CalendarDays />
 							</DropdownMenuShortcut>
 						</DropdownMenuItem>
-						<DropdownMenuItem className='hover:cursor-pointer'>
+						<DropdownMenuItem
+							className='hover:cursor-pointer'
+							onClick={() => router.push('/admin/events')}
+						>
 							Manage Events
 							<DropdownMenuShortcut>
 								<CalendarDays />
 							</DropdownMenuShortcut>
 						</DropdownMenuItem>
-						<DropdownMenuItem className='hover:cursor-pointer'>
+						<DropdownMenuItem
+							className='hover:cursor-pointer'
+							onClick={() => router.push('/admin/categories')}
+						>
 							Manage Categories
 							<DropdownMenuShortcut>
 								<ChartBarStacked />
 							</DropdownMenuShortcut>
 						</DropdownMenuItem>
-						<DropdownMenuItem className='hover:cursor-pointer'>
+						<DropdownMenuItem
+							className='hover:cursor-pointer'
+							onClick={() => router.push('/admin/transactions')}
+						>
 							Transactions
 							<DropdownMenuShortcut>
 								<Scroll />

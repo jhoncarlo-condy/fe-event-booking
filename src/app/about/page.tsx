@@ -1,7 +1,7 @@
 import React from 'react';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
 import About from './about';
-import Header from '@/components/header/Header';
-import Footer from '@/components/footer/Footer';
 
 const page = () => {
 	return (

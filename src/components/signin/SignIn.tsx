@@ -108,7 +108,7 @@ const SignIn = () => {
 			</h1>
 			<div className='flex flex-col space-y-4'>
 				<form onSubmit={handleSubmit}>
-					<div className='space-y-4'>
+					<div>
 						{' '}
 						{/* Changed space-y-2 to space-y-4 here */}
 						<FloatingLabelInput

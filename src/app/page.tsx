@@ -10,8 +10,8 @@ import {
 import Autoplay from 'embla-carousel-autoplay';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Footer from '@/components/footer/Footer';
-import Header from '@/components/header/Header';
+import Footer from '@/components/footer/footer';
+import Header from '@/components/header/header';
 
 
 const LandingPage = () => {
