@@ -36,6 +36,7 @@ import {
 import CreateEvent from './create-event';
 import EditEvent from './edit-event';
 import { useGetEvents } from '@/server/event/event';
+import { Event } from '@/types/types';
 
 const Events = () => {
 	const [events, setEvents] = useState([]);
@@ -124,7 +125,7 @@ const Events = () => {
 											{new Date(event.event_date).toLocaleDateString()}
 										</TableCell>
 										<TableCell className='hidden md:table-cell'>
-											{event.start_time + " - " + event.end_time}
+											{event.start_time + ' - ' + event.end_time}
 										</TableCell>
 										<TableCell className='hidden md:table-cell'>
 											{event.price}
@@ -180,12 +181,13 @@ const Events = () => {
 					</div>
 				</CardFooter>
 			</Card>
-			{/* Create User */}
+			{/* Create Event */}
 			<Dialog open={createOpen} onOpenChange={setCreateOpen}>
 				<DialogTrigger asChild></DialogTrigger>
 				<DialogContent
 					onPointerDownOutside={(e) => e.preventDefault()}
 					onEscapeKeyDown={(e) => e.preventDefault()}
+					className='overflow-auto max-h-[90vh] w-full md:w-[500px] rounded-lg'
 				>
 					<DialogHeader>
 						<DialogTitle></DialogTitle>
@@ -193,12 +195,13 @@ const Events = () => {
 					<CreateEvent setCreateOpen={setCreateOpen} />
 				</DialogContent>
 			</Dialog>
-			{/* Edit User */}
+			{/* Edit Event */}
 			<Dialog open={updateOpen} onOpenChange={setUpdateOpen}>
 				<DialogTrigger asChild></DialogTrigger>
 				<DialogContent
 					onPointerDownOutside={(e) => e.preventDefault()}
 					onEscapeKeyDown={(e) => e.preventDefault()}
+					className='overflow-auto max-h-[90vh] w-full md:w-[500px] rounded-lg'
 				>
 					<DialogHeader>
 						<DialogTitle></DialogTitle>
