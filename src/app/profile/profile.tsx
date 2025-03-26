@@ -47,7 +47,6 @@ const Profile = () => {
 	useEffect(() => {
 		if (result) {
 			const data = result.data;
-			setEmail('zxc');
 			setFirstName(data.first_name || '');
 			setLastName(data.last_name || '');
 			setEmail(data.email || '');

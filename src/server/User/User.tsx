@@ -1,5 +1,5 @@
 import { AxiosInstance } from '@/utils/axios';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 export const loginUser = async ({
 	email,
@@ -121,6 +121,16 @@ export const useGetUser = () => {
 	return { data: data , error, isLoading };
 }
 
+export const getUserDetail = async ({ email }: { email: string }) => {
+	return await AxiosInstance.get(`/user/${email}`)
+	  .then((response) => {
+		return response.data;
+	  })
+	  .catch((error) => {
+		return error.response?.data;
+	  });
+  };
+  
 export const getUsers = async () => {
 	return await AxiosInstance.get('/users')
 		.then((response) => {
