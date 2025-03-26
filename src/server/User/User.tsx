@@ -112,25 +112,25 @@ export const getUser = async () => {
 };
 
 export const useGetUser = () => {
-	const {data, error, isLoading} = useQuery({
-		queryKey: ["getUser"],
+	const { data, error, isLoading } = useQuery({
+		queryKey: ['getUser'],
 		queryFn: getUser,
-		staleTime: Infinity
+		staleTime: Infinity,
 	});
 
-	return { data: data , error, isLoading };
-}
+	return { data: data, error, isLoading };
+};
 
 export const getUserDetail = async ({ email }: { email: string }) => {
 	return await AxiosInstance.get(`/user/${email}`)
-	  .then((response) => {
-		return response.data;
-	  })
-	  .catch((error) => {
-		return error.response?.data;
-	  });
-  };
-  
+		.then((response) => {
+			return response.data;
+		})
+		.catch((error) => {
+			return error.response?.data;
+		});
+};
+
 export const getUsers = async () => {
 	return await AxiosInstance.get('/users')
 		.then((response) => {
@@ -139,14 +139,14 @@ export const getUsers = async () => {
 		.catch((error) => {
 			return error.response?.data;
 		});
-}
+};
 
 export const useGetUsers = () => {
-	const {data, error, isLoading} = useQuery({
-		queryKey: ["getUsers"],
+	const { data, error, isLoading } = useQuery({
+		queryKey: ['getUsers'],
 		queryFn: getUsers,
-		staleTime: Infinity
+		staleTime: Infinity,
 	});
 
-	return { data: data , error, isLoading };
-}
+	return { data: data, error, isLoading };
+};

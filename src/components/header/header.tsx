@@ -36,7 +36,7 @@ const Header = () => {
 		<>
 			<header className='bg-[#3674B5] p-4'>
 				<div className='max-w-7xl mx-auto flex justify-between items-center'>
-					<h1 className='text-white text-xl font-bold'>ABC Event Bookings</h1>
+					<h1 className='text-white text-xl font-bold hover:cursor-pointer' onClick={() => window.location.replace('/')}>ABC Event Bookings</h1>
 					<NavigationMenu>
 						<NavigationMenuList className='flex space-x-6'>
 							<NavigationMenuItem>
