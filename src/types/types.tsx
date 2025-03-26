@@ -20,3 +20,8 @@ export interface Event {
 	image: string | null;
 	status: string;
 }
+
+export interface Category {
+	id: number;
+	name: string;
+}
